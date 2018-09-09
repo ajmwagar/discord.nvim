@@ -52,6 +52,7 @@ if !exists('g:discord_fts_whitelist')
         \'haskell',
         \'html',
         \'javascript',
+        \'javascript.jsx',
         \'json',
         \'jsx',
         \'kotlin',

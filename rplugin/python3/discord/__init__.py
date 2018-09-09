@@ -87,6 +87,11 @@ class DiscordPlugin(object):
             return
         ft = self.get_current_buf_var("&ft")
         self.log_debug('ft: {}'.format(ft))
+
+        # Fix js
+        if ft == "javascript.jsx":
+            ft = "javascript"
+
         if ft in self.fts_blacklist or ft not in self.fts_whitelist:
             return
         workspace = self.get_workspace()
@@ -104,15 +109,15 @@ class DiscordPlugin(object):
         activity = {}
         activity["details"] = "Editing {}".format(basename(filename))
         activity["assets"] = {
-            "large_text": "The One True Editor",
-            "large_image": "neovim"
+            "small_text": "Neovim",
+            "small_image": "neovim"
         }
         activity["timestamps"] = {"start": time()}
         if ft:
             if len(ft) == 1:
                 ft = "lang_{}".format(ft)
-            activity["assets"]["small_text"] = ft
-            activity["assets"]["small_image"] = ft
+            activity["assets"]["large_text"] = "Editing a " + ft + " file"
+            activity["assets"]["large_image"] = ft
         if workspace:
             activity["state"] = "Working on {}".format(workspace)
         self.discord.set_activity(activity, self.vim.call("getpid"))
